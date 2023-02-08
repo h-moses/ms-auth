@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.ms.model.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @ApiModel(description = "用户角色")
 @TableName("sys_user_role")
 public class SysUserRole extends BaseEntity {
