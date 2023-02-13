@@ -10,6 +10,7 @@ import com.ms.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,17 +26,14 @@ public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("查询所有角色")
     @GetMapping("findAll")
     public Result<List<SysRole>> roleList() {
-        try {
-            int a = 10 / 0;
-        } catch (Exception e) {
-            throw new CustomException(500, "服务器不能访问");
-        }
         return Result.ok(sysRoleService.list());
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("根据角色Id逻辑删除角色")
     @DeleteMapping("remove/{id}")
     public Result delete(@PathVariable("id") Long id) {
@@ -45,6 +43,7 @@ public class SysRoleController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("条件分页查询")
     @GetMapping("{page}/{limit}")
     public Result findRolePage(@PathVariable("page") Long page,
@@ -58,6 +57,7 @@ public class SysRoleController {
         return Result.ok(sysRolePage);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.add')")
     @ApiOperation("添加角色")
     @PostMapping("save")
     public Result saveRole(@RequestBody SysRole sysRole) {
@@ -68,6 +68,7 @@ public class SysRoleController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("根据id查询角色")
     @PostMapping("findRoleById/{id}")
     public Result findRoleById(@PathVariable("id") Long id) {
@@ -75,6 +76,7 @@ public class SysRoleController {
         return Result.ok(byId);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.update')")
     @ApiOperation("修改角色")
     @PostMapping("update")
     public Result update(SysRole sysRole) {
@@ -85,6 +87,7 @@ public class SysRoleController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("批量删除角色")
     @DeleteMapping("batchDelete")
     public Result removeBatch(@RequestBody List<Long> ids) {
