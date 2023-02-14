@@ -3,6 +3,7 @@ package com.ms.system.config;
 import com.ms.security.custom.MD5Password;
 import com.ms.security.filter.LoginFilter;
 import com.ms.security.filter.TokenAuthenticationFilter;
+import com.ms.security.service.LoginLogService;
 import com.ms.system.service.impl.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,9 @@ public class SecurityConfig {
     @Resource
     private AuthenticationManager authenticationManager;
 
+    @Resource
+    private LoginLogService loginLogService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new MD5Password(); //Spring Security 自带
@@ -59,7 +63,7 @@ public class SecurityConfig {
                 .and()
                 .userDetailsService(userDetailService)
                 .addFilterBefore(new TokenAuthenticationFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new LoginFilter(authenticationManager, redisTemplate));
+                .addFilter(new LoginFilter(authenticationManager, redisTemplate, loginLogService));
         return http.build();
     }
 

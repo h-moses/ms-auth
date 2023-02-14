@@ -3,6 +3,8 @@ package com.ms.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.result.Result;
+import com.ms.log.annotation.Log;
+import com.ms.log.enums.BusinessEnum;
 import com.ms.model.system.SysRole;
 import com.ms.model.vo.SysRoleQueryVo;
 import com.ms.system.exception.CustomException;
@@ -26,6 +28,7 @@ public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
 
+    @Log(title = "查询角色", business = BusinessEnum.OTHER)
     @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("查询所有角色")
     @GetMapping("findAll")
