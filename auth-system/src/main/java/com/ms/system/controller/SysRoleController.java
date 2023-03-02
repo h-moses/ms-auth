@@ -7,7 +7,6 @@ import com.ms.log.annotation.Log;
 import com.ms.log.enums.BusinessEnum;
 import com.ms.model.system.SysRole;
 import com.ms.model.vo.SysRoleQueryVo;
-import com.ms.system.exception.CustomException;
 import com.ms.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

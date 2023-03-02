@@ -2,7 +2,6 @@ package com.ms.log.annotation;
 
 import com.ms.log.enums.BusinessEnum;
 import com.ms.log.enums.OperatorEnum;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.lang.annotation.*;
 

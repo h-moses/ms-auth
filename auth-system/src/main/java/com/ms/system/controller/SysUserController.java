@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.result.Result;
 import com.ms.common.utils.MD5Util;
-import com.ms.model.system.SysRole;
 import com.ms.model.system.SysUser;
 import com.ms.model.vo.SysUserQueryVo;
 import com.ms.system.service.SysUserService;

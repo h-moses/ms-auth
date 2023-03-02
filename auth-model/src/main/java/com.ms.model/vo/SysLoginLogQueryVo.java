@@ -1,7 +1,7 @@
 package com.ms.model.vo;
 
-import lombok.Data;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @Data
 public class SysLoginLogQueryVo {
