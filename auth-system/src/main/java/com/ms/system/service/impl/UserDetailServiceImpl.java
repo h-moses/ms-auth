@@ -26,7 +26,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws RuntimeException {
-        System.out.println("使用自定义的认证逻辑");
         SysUser sysUser = userService.getOne(new QueryWrapper<SysUser>().eq("username", username));
         if (null == sysUser) {
             throw new UsernameNotFoundException("用户不存在");

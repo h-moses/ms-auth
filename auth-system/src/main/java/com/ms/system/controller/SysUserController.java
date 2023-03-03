@@ -10,6 +10,7 @@ import com.ms.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,17 +25,25 @@ public class SysUserController {
     @Resource
     private SysUserService service;
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @ApiOperation("用户列表")
     @GetMapping("/{page}/{limit}")
     public Result list(@PathVariable("page") Long page, @PathVariable("limit") Long limit, SysUserQueryVo sysUserQueryVo) {
         Page<SysUser> page1 = new Page<>(page, limit);
-        QueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>().like(StringUtils.hasText(sysUserQueryVo.getKeyword()), "username", sysUserQueryVo.getKeyword())
-                .eq("is_deleted", 0)
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<SysUser>().
+                like(StringUtils.hasText(sysUserQueryVo.getKeyword()), "username", sysUserQueryVo.getKeyword())
+                .or()
+                .like(StringUtils.hasText(sysUserQueryVo.getKeyword()), "name", sysUserQueryVo.getKeyword())
+                .or()
+                .like(StringUtils.hasText(sysUserQueryVo.getKeyword()), "phone", sysUserQueryVo.getKeyword())
+                .ge(StringUtils.hasText(sysUserQueryVo.getCreateTimeBegin()), "create_time", sysUserQueryVo.getCreateTimeBegin())
+                .le(StringUtils.hasText(sysUserQueryVo.getCreateTimeEnd()), "create_time", sysUserQueryVo.getCreateTimeEnd())
                 .orderByAsc("id");
         Page<SysUser> userPage = service.page(page1, wrapper);
         return Result.ok(userPage);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.add')")
     @ApiOperation("添加用户")
     @PostMapping("save")
     public Result save(@RequestBody SysUser sysUser) {
@@ -47,6 +56,7 @@ public class SysUserController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @ApiOperation("根据ID查询")
     @GetMapping("getUser/{id}")
     public Result getUser(@PathVariable("id") String id) {
@@ -54,6 +64,7 @@ public class SysUserController {
         return Result.ok(byId);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.update')")
     @ApiOperation("修改用户")
     @PostMapping("update")
     public Result update(@RequestBody SysUser sysUser) {
@@ -64,6 +75,7 @@ public class SysUserController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.remove')")
     @ApiOperation("删除用户")
     @DeleteMapping("remove/{id}")
     public Result delete(@PathVariable("id") String id) {
@@ -74,6 +86,7 @@ public class SysUserController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.update')")
     @ApiOperation("更改状态")
     @GetMapping("updateStatus/{id}/{status}")
     public Result updateStatus(@PathVariable("id") String id, @PathVariable("status") Integer status) {

@@ -6,8 +6,11 @@ import com.ms.common.result.Result;
 import com.ms.log.annotation.Log;
 import com.ms.log.enums.BusinessEnum;
 import com.ms.model.system.SysRole;
+import com.ms.model.system.SysUserRole;
+import com.ms.model.vo.AssginRoleVo;
 import com.ms.model.vo.SysRoleQueryVo;
 import com.ms.system.service.SysRoleService;
+import com.ms.system.service.SysUserRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -16,18 +19,23 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
 @Api(tags = "角色接口")
-@RequestMapping(value = "/admin/system/sysRole")
+@RequestMapping(value = "/admin/system/sysRole/")
 public class SysRoleController {
 
     @Resource
     private SysRoleService sysRoleService;
 
-    @Log(title = "查询角色", business = BusinessEnum.OTHER)
+    @Resource
+    private SysUserRoleService userRoleService;
+
+//    @Log(title = "查询角色", business = BusinessEnum.OTHER)
     @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("查询所有角色")
     @GetMapping("findAll")
@@ -53,7 +61,6 @@ public class SysRoleController {
                                SysRoleQueryVo sysRoleQueryVo) {
         Page<SysRole> rolePage = new Page<>(page, limit);
         QueryWrapper<SysRole> wrapper = new QueryWrapper<SysRole>().like(StringUtils.hasText(sysRoleQueryVo.getRoleName()), "role_name", sysRoleQueryVo.getRoleName())
-                .eq("is_deleted", 0)
                 .orderByAsc("id");
         Page<SysRole> sysRolePage = sysRoleService.page(rolePage, wrapper);
         return Result.ok(sysRolePage);
@@ -81,7 +88,7 @@ public class SysRoleController {
     @PreAuthorize("hasAuthority('bnt.sysRole.update')")
     @ApiOperation("修改角色")
     @PostMapping("update")
-    public Result update(SysRole sysRole) {
+    public Result update(@RequestBody SysRole sysRole) {
         boolean b = sysRoleService.updateById(sysRole);
         if (b) {
             return Result.ok();
@@ -100,4 +107,28 @@ public class SysRoleController {
         return Result.fail();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
+    @ApiOperation("获取用户角色数据")
+    @GetMapping("toAssign/{userId}")
+    public Result assigned(@PathVariable("userId") String id) {
+        List<SysRole> roleList = sysRoleService.list();
+        List<SysUserRole> list = userRoleService.list(new QueryWrapper<SysUserRole>().eq("user_id", id));
+        HashMap<String, List> map = new HashMap<>();
+        map.put("allRoles", roleList);
+        map.put("userRoleIds", list.stream().map(SysUserRole::getRoleId).collect(Collectors.toList()));
+        return Result.ok(map);
+    }
+
+    @PreAuthorize("hasAuthority('bnt.sysUser.assignRole')")
+    @ApiOperation("分配角色")
+    @PostMapping("doAssign")
+    public Result assign(@RequestBody AssginRoleVo assginRoleVo) {
+        String userId = assginRoleVo.getUserId();
+        userRoleService.remove(new QueryWrapper<SysUserRole>().eq("user_id", userId));
+        for (String role_id:
+                assginRoleVo.getRoleIdList()) {
+            userRoleService.save(new SysUserRole(role_id, userId));
+        }
+        return Result.ok();
+    }
 }
