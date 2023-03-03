@@ -17,7 +17,7 @@ public enum ResultCodeEnum {
     PERMISSION(209, "没有权限"),
     ACCOUNT_ERROR(214, "账号不正确"),
     PASSWORD_ERROR(215, "密码不正确"),
-    LOGIN_MOBLE_ERROR( 216, "账号不正确"),
+    LOGIN_MOBILE_ERROR( 216, "账号不正确"),
     ACCOUNT_STOP( 217, "账号已停用"),
     NODE_ERROR( 218, "该节点下有子节点，不可以删除")
     ;

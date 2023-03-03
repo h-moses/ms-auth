@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 @Api(tags = "用户角色接口")
-@RequestMapping("/admin/system/sysRole")
+@RequestMapping("/admin/system/sysUserRole")
 public class SysUserRoleController {
 
     @Resource

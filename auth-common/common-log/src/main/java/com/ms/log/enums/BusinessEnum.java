@@ -15,8 +15,6 @@ public enum BusinessEnum {
 
     IMPORT,
 
-    FORCE,
-
     STATUS,
 
     CLEAN

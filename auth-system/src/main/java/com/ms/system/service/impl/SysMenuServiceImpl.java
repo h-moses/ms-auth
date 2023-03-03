@@ -92,31 +92,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         List<SysMenu> sysMenus = MenuHelper.buildTree(menuList);
         List<RouterVo> routers = RoutHelper.buildRouters(sysMenus);
+
+        System.out.println("Menu获取成功");
         return routers;
     }
-
-//    private List<SysMenu> findMenuListByUserId(String id) {
-//        LambdaQueryWrapper<SysUserRole> wrapper = Wrappers.lambdaQuery(SysUserRole.class).eq(SysUserRole::getUserId, id).eq(SysUserRole::getIsDeleted, 0);
-//        String roleId = Optional.ofNullable(userRoleMapper.selectOne(wrapper)).map(SysUserRole::getRoleId).orElse(null);
-//        Optional.ofNullable(roleId).ifPresent(this::findRoleMenu);
-//        return null;
-//    }
-//
-//    private List<SysMenu> findRoleMenu(String s) {
-//        LambdaQueryWrapper<SysRoleMenu> wrapper = Wrappers.lambdaQuery(SysRoleMenu.class).eq(SysRoleMenu::getRoleId, s).eq(SysRoleMenu::getIsDeleted, 0);
-//        List<String> list = Optional.ofNullable(roleMenuMapper.selectList(wrapper)).get().stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-//        Optional.ofNullable(list).ifPresent(this::findMenuInfo);
-//        return null;
-//    }
-//
-//    private List<SysMenu> findMenuInfo(List<String> strings) {
-//        List<SysMenu> list = new ArrayList<>();
-//        strings.stream().forEach(consumer -> {
-//            SysMenu sysMenu = menuMapper.selectOne(new QueryWrapper<SysMenu>().eq("id", consumer).eq("status", 1).eq("is_deleted", 0));
-//            list.add(sysMenu);
-//        });
-//        return list;
-//    }
 
     @Override
     public List<String> getButtonList(String id) {
@@ -127,6 +106,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             menuList = menuMapper.findMenuListByUserId(id);
         }
         List<String> collect = menuList.stream().filter(c -> c.getType() == 2).map(SysMenu::getPerms).collect(Collectors.toList());
+        System.out.println("权限获取成功");
         return collect;
     }
 }

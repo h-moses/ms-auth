@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Api(tags = "菜单接口")
-@RequestMapping("/admin/system/menu")
+@RequestMapping("/admin/system/sysMenu")
 public class SysMenuController {
 
     @Resource

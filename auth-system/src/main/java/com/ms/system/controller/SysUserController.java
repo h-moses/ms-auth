@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 @RestController
 @Slf4j
 @Api(tags = "用户接口")
-@RequestMapping("/admin/system/user")
+@RequestMapping("/admin/system/sysUser")
 public class SysUserController {
 
     @Resource

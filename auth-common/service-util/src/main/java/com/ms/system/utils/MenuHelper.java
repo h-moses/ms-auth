@@ -21,10 +21,7 @@ public class MenuHelper {
     private static SysMenu findChildren(SysMenu sysMenu, List<SysMenu> list) {
         sysMenu.setChildren(new ArrayList<SysMenu>());
         for (SysMenu item: list) {
-            String id = sysMenu.getId();
-            long lid = Long.parseLong(id);
-            Long parentId = item.getParentId();
-            if (lid == parentId) {
+            if (Long.parseLong(sysMenu.getId()) == item.getParentId()) {
                 if (sysMenu.getChildren() == null) {
                     sysMenu.setChildren(new ArrayList<>());
                 }

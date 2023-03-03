@@ -27,7 +27,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<String> buttonList = menuService.getButtonList(user.getId());
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("username", username);
+        map.put("name", username);
+        map.put("avatar", user.getHeadUrl());
         map.put("roles", "[\"admin\"]");
         map.put("routers", menuList);
         map.put("buttons", buttonList );

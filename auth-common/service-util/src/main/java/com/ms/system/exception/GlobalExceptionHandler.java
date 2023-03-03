@@ -19,11 +19,6 @@ public class GlobalExceptionHandler {
         return Result.fail().message("执行特定异常处理");
     }
 
-    @ExceptionHandler(CustomException.class)
-    public Result error(CustomException e) {
-        return Result.fail().message(e.getMessage());
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public Result error(AccessDeniedException e) {
         return Result.fail().code(ResultCodeEnum.PERMISSION.getCode()).message("没有当前功能的操作权限");

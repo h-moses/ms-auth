@@ -74,7 +74,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         if (failed.getCause() instanceof RuntimeException) {
             ResponseUtil.out(response, Result.build(null, 204, failed.getMessage()));
         } else {
-            ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_MOBLE_ERROR));
+            ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_MOBILE_ERROR));
         }
     }
 }

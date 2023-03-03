@@ -30,6 +30,7 @@ public class IndexController {
     @PostMapping("login")
     public Result login(@RequestBody LoginVo loginVo) {
 
+        System.out.println("开始登录");
         SysUser user = service.getOne(new QueryWrapper<SysUser>().eq("username", loginVo.getUsername()));
 
         if (null == user) {
