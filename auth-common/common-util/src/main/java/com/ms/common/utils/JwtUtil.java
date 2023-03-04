@@ -27,7 +27,7 @@ public class JwtUtil {
     //从token字符串获取userid
     public static String getUserId(String token) {
         try {
-            if (StringUtils.isEmpty(token)) return null;
+            if (!StringUtils.hasText(token)) return null;
 
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
             Claims claims = claimsJws.getBody();
@@ -42,7 +42,7 @@ public class JwtUtil {
     //从token字符串获取username
     public static String getUsername(String token) {
         try {
-            if (StringUtils.isEmpty(token)) return "";
+            if (!StringUtils.hasText(token)) return "";
 
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
             Claims claims = claimsJws.getBody();

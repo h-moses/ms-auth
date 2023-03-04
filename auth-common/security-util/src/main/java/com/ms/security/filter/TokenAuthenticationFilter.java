@@ -36,12 +36,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
-        if("/prod-api/admin/system/index/login".equals(request.getRequestURI())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
         if(null != authentication) {
             SecurityContextHolder.getContext().setAuthentication(authentication);

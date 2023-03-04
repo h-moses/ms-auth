@@ -9,13 +9,9 @@ public enum BusinessEnum {
 
     DELETE,
 
-    ASSIGN,
+    SELECT,
 
-    EXPORT,
+    CLEAN,
 
-    IMPORT,
-
-    STATUS,
-
-    CLEAN
+    ASSIGN
 }

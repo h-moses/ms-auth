@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ms.common.result.Result;
 import com.ms.common.utils.MD5Util;
+import com.ms.log.annotation.Log;
+import com.ms.log.enums.BusinessEnum;
+import com.ms.log.enums.OperatorEnum;
 import com.ms.model.system.SysUser;
 import com.ms.model.vo.SysUserQueryVo;
 import com.ms.system.service.SysUserService;
@@ -25,6 +28,7 @@ public class SysUserController {
     @Resource
     private SysUserService service;
 
+    @Log(title = "查询用户", operator = OperatorEnum.MANAGE, business = BusinessEnum.SELECT)
     @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @ApiOperation("用户列表")
     @GetMapping("/{page}/{limit}")

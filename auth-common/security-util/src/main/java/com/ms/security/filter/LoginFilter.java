@@ -37,7 +37,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         this.redisTemplate = redisTemplate;
         this.loginLogService = loginLogService;
         this.setAuthenticationManager(authenticationManager);
-        this.setPostOnly(false);
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/system/index/login", "POST"));
     }
 
